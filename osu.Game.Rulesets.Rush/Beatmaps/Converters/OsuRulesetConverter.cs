@@ -11,6 +11,8 @@ namespace osu.Game.Rulesets.Rush.Beatmaps.Converters
 {
     internal class OsuRulesetConverter : RulesetConverter
     {
+        public const int RULESET_ID = 1;
+
         private const float half_height = 200f;
 
         public OsuRulesetConverter(IBeatmap original)

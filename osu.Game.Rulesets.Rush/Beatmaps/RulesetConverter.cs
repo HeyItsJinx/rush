@@ -70,7 +70,11 @@ namespace osu.Game.Rulesets.Rush.Beatmaps
             var kiaiMultiplier = original.Kiai ? KIAI_MULTIPLIER : 1;
 
             // try to get a lane from the force flags
-            if (flags.HasFlag(HitObjectFlags.ForceSameLane) || flags.HasFlag(HitObjectFlags.SuggestSameLane) && random.NextDouble() < SUGGEST_PROBABILITY)
+            if (flags.HasFlag(HitObjectFlags.ForceAir))
+                lane = LanedHitLane.Air;
+            else if (flags.HasFlag(HitObjectFlags.ForceGround))
+                lane = LanedHitLane.Ground;
+            else if (flags.HasFlag(HitObjectFlags.ForceSameLane) || flags.HasFlag(HitObjectFlags.SuggestSameLane) && random.NextDouble() < SUGGEST_PROBABILITY)
                 lane = State.PreviousLane;
             else if (flags.HasFlag(HitObjectFlags.ForceNotSameLane) || flags.HasFlag(HitObjectFlags.SuggestNotSameLane) && random.NextDouble() < SUGGEST_PROBABILITY)
                 lane = State.PreviousLane?.Opposite();
@@ -162,7 +166,8 @@ namespace osu.Game.Rulesets.Rush.Beatmaps
             }
 
             // if not too close to a sawblade, allow adding a double hit
-            if (original.StartTime - State.LastSawbladeTime >= SAWBLADE_SAME_LANE_SAFETY_TIME
+            if (flags.HasFlag(HitObjectFlags.ForceDoubleHit) ||
+                original.StartTime - State.LastSawbladeTime >= SAWBLADE_SAME_LANE_SAFETY_TIME
                 && flags.HasFlag(HitObjectFlags.AllowDoubleHit)
                 && original.StartTime >= State.NextDualOrbTime
                 && random.NextDouble() < ORB_PROBABILITY)
@@ -337,22 +342,26 @@ namespace osu.Game.Rulesets.Rush.Beatmaps
             /// </summary>
             AllowDoubleHit = 1 << 5,
 
+            ForceDoubleHit = 1 << 6,
+
             /// <summary>
             /// Indicates that the next object may be completely replaced with a sawblade in the opposite lane.
             /// </summary>
-            AllowSawbladeReplace = 1 << 6,
+            AllowSawbladeReplace = 1 << 7,
 
             /// <summary>
             /// Indicates that the next object may additionally add a sawblade to the opposite lane.
             /// </summary>
-            AllowSawbladeAdd = 1 << 7,
+            AllowSawbladeAdd = 1 << 8,
 
-            ForceStartNotesheet = 1 << 8,
-            ForceEndNotesheet = 1 << 9,
-            SuggestStartNotesheet = 1 << 10,
-            SuggestEndNotesheet = 1 << 11,
+            ForceStartNotesheet = 1 << 9,
+            ForceEndNotesheet = 1 << 10,
+            SuggestStartNotesheet = 1 << 11,
+            SuggestEndNotesheet = 1 << 12,
 
-            ForceMiniboss = 1 << 12,
+            ForceMiniboss = 1 << 13,
+            ForceAir = 1 << 14,
+            ForceGround = 1 << 15,
 
             AllowSawbladeAddOrReplace = AllowSawbladeAdd | AllowSawbladeReplace,
         }
