@@ -9,8 +9,10 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Bindings;
 using osu.Game.Beatmaps;
 using osu.Game.Rulesets.Difficulty;
+using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Mods;
 using osu.Game.Rulesets.Rush.Beatmaps;
+using osu.Game.Rulesets.Rush.Edit;
 using osu.Game.Rulesets.Rush.Mods;
 using osu.Game.Rulesets.Rush.Scoring;
 using osu.Game.Rulesets.Rush.UI;
@@ -41,6 +43,8 @@ namespace osu.Game.Rulesets.Rush
         public override HealthProcessor CreateHealthProcessor(double drainStartTime) => new RushHealthProcessor();
 
         public override ScoreProcessor CreateScoreProcessor() => new RushScoreProcessor();
+
+        public override HitObjectComposer CreateHitObjectComposer() => new RushHitObjectComposer(this);
 
         public override IEnumerable<Mod> GetModsFor(ModType type)
         {
