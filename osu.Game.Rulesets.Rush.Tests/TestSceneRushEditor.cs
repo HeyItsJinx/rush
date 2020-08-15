@@ -9,9 +9,6 @@ namespace osu.Game.Rulesets.Rush.Tests
     [TestFixture]
     public class TestSceneRushEditor : EditorTestScene
     {
-        public TestSceneRushEditor()
-            : base(new RushRuleset())
-        {
-        }
+        protected override Ruleset CreateEditorRuleset() => new RushRuleset();
     }
 }
