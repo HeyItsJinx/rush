@@ -26,7 +26,7 @@ namespace osu.Game.Rulesets.Rush.UI
 
         protected override ScrollVisualisationMethod VisualisationMethod => ScrollVisualisationMethod.Constant;
 
-        public DrawableRushRuleset(RushRuleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
+        public DrawableRushRuleset(Ruleset ruleset, IBeatmap beatmap, IReadOnlyList<Mod> mods = null)
             : base(ruleset, beatmap, mods)
         {
             Direction.Value = ScrollingDirection.Left;

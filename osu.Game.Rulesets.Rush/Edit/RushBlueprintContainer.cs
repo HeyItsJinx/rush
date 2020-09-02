@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using osu.Game.Rulesets.Edit;
 using osu.Game.Rulesets.Objects.Drawables;
 using osu.Game.Rulesets.Rush.Edit.Blueprints;
+using osu.Game.Rulesets.Rush.Objects.Drawables;
 using osu.Game.Screens.Edit.Compose.Components;
 
 namespace osu.Game.Rulesets.Rush.Edit
@@ -18,7 +19,24 @@ namespace osu.Game.Rulesets.Rush.Edit
 
         protected override SelectionHandler CreateSelectionHandler() => new RushSelectionHandler();
 
-        public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject) =>
-            new RushSelectionBlueprint(hitObject);
+        public override OverlaySelectionBlueprint CreateBlueprintFor(DrawableHitObject hitObject)
+        {
+            switch (hitObject)
+            {
+                case DrawableMinion minion:
+                    return new MinionSelectionBlueprint(minion);
+
+                case DrawableNoteSheet noteSheet:
+                    return new NoteSheetSelectionBlueprint(noteSheet);
+
+                case DrawableMiniBoss miniBoss:
+                    return new MiniBossSelectionBlueprint(miniBoss);
+
+                case DrawableDualHit dualHit:
+                    return new DualHitSelectionBlueprint(dualHit);
+            }
+
+            return base.CreateBlueprintFor(hitObject);
+        }
     }
 }

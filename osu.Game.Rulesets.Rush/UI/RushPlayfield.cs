@@ -37,6 +37,8 @@ namespace osu.Game.Rulesets.Rush.UI
 
         public RushPlayerSprite PlayerSprite { get; }
 
+        protected Container LeftAreaContainer { get; }
+
         private readonly Container underEffectContainer;
         private readonly Container overEffectContainer;
         private readonly Container halfPaddingOverEffectContainer;
@@ -71,7 +73,7 @@ namespace osu.Game.Rulesets.Rush.UI
                                 RelativeSizeAxes = Axes.Both,
                                 Children = new[]
                                 {
-                                    new Container
+                                    LeftAreaContainer = new Container
                                     {
                                         Name = "Left area",
                                         Width = HIT_TARGET_OFFSET,
